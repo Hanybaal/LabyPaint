@@ -46,7 +46,6 @@ class Game():
             return ((0, -1))
 
         
-        
         if (entry == pygame.K_ESCAPE):
             return -1
 

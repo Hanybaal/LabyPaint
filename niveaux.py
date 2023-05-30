@@ -55,7 +55,6 @@ class Niveaux():
         return (len(self.levels.keys()))
 
 
-    
     #Fonctions Modificatrices
     def changeMonde(self, n):
         self.numondeActuel = n
@@ -66,8 +65,12 @@ class Niveaux():
     def changeNiveauActuel(self, n):
         self.niveauActuel = n
 
+    def dernierNiveauPasse(self):
+        return (self.getNiveauActuel() == self.getNbLevels())
+
     def niveauSuivant(self):
-        if self.getNiveauActuel() == self.getNbLevels():
+        if self.dernierNiveauPasse():
+            ##A changer pour revenir sur la map du monde
             self.mondeSuivant()
             self.changeNiveauActuel(0)
         self.changeNiveauActuel((self.getNiveauActuel())%self.getNbLevels() + 1)

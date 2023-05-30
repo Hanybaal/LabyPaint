@@ -43,7 +43,7 @@ class Grille():
     def pasDeCaseLibre(self):
         for ligne in self.getGrille():
             for cel in ligne:
-                if (cel.getEtat() == 1):
+                if (cel.estPeinte()):
                     return False                
         return True
 
@@ -51,7 +51,7 @@ class Grille():
         n = 0
         for ligne in self.getGrille():
             for cel in ligne:
-                if (cel.getEtat() == 1):
+                if (cel.estPeinte()):
                     n += 1
         return n
 
@@ -100,6 +100,9 @@ class Cellule():
 
     def estLibre(self):
         return (not self.estUnMur())
+
+    def estPeinte(self):
+        return (self.getEtat() == 1)
 
     def passage(self, difficile = False):
         self.visitee = True
