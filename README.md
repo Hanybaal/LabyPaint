@@ -1,6 +1,6 @@
 # labyrinthe_painting
 
-TEST
+
 
 ## Getting started
 

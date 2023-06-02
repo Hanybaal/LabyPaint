@@ -1,4 +1,4 @@
-from grille import *
+from GameGrid import *
 from player import *
 from graphisme import *
 
@@ -9,7 +9,7 @@ class Game():
         self.player = self.init_player()
         self.graphismes = g
         if g is not None:
-            self.graphismes = self.init_graphismes(self.grille.getTaille(), niveauActuel)
+            self.graphismes = self.init_graphismes(self.grille.getTailleY(), niveauActuel)
 
 
     def game(self):
@@ -28,7 +28,7 @@ class Game():
             return self.quitter()
 
         casesParcourues = self.player.deplacement(self.grille, d, [self.player.getCA()])
-        self.graphismes.deplaceJoueur(casesParcourues, d)
+        self.graphismes.deplaceJoueur(casesParcourues, d, self.grille.getGrille())
         return self.game()
         
 
@@ -65,7 +65,7 @@ class Game():
         
 
     def init_grille(self):
-        g = Grille()
+        g = GameGrid()
         fichier = open(self.lecteur.getPath(), "r")
         g.crea_grille(fichier)
         return g

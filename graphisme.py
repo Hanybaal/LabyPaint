@@ -34,7 +34,7 @@ class Graphismes(pygame.sprite.Sprite):
                 self.afficheCellule(cellule)
 
 
-    def deplaceJoueur(self, casesParcourues, direction):
+    def deplaceJoueur(self, casesParcourues, direction, grille):
         if len(casesParcourues) == 0:
             return
 
@@ -46,7 +46,7 @@ class Graphismes(pygame.sprite.Sprite):
             self.afficheCellule(casesParcourues[0])
             self.fen.blit(j, (x, y))
             
-            infos = casesParcourues[0].getInformations()
+            infos = casesParcourues[0].getInformations(grille)
             self.afficheFrioritures(casesParcourues[0], infos)
             pygame.display.flip()
             return
@@ -55,7 +55,7 @@ class Graphismes(pygame.sprite.Sprite):
         diviseur = 10
         add = (self.pas)/diviseur
         caseActuelle = casesParcourues[0]
-        infos = caseActuelle.getInformations()
+        infos = caseActuelle.getInformations(grille)
 
         for cmp in range(diviseur + 1):
             self.afficheCellule(caseActuelle)
@@ -67,7 +67,7 @@ class Graphismes(pygame.sprite.Sprite):
 
         self.afficheCellule(caseActuelle)
         self.afficheFrioritures(caseActuelle, infos)
-        self.deplaceJoueur(casesParcourues[1:], direction)    
+        self.deplaceJoueur(casesParcourues[1:], direction, grille)    
     
     def affichePlayer(self, p):
         x, y = p.getX()*self.pas, p.getY()*self.pas
