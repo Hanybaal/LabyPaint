@@ -1,4 +1,5 @@
 from game import *
+from Monde import *
 
 class Niveaux():
     def __init__(self):
@@ -27,11 +28,6 @@ class Niveaux():
         if retour == -1:
             return
         self.adventure()
-
-
-    def launchLevel(self, n, nbT):
-        return self.levels[self.getMondeActuel()]["Level" + str(n)](
-            self.getPath() + nbT + "Level" + str(n) + ".txt")
     
 
 
@@ -47,9 +43,6 @@ class Niveaux():
 
     def getNiveauActuel(self):
         return self.niveauActuel
-
-    def getNbLevels(self):
-        return (len(self.levels[self.getMondeActuel()].keys()))
 
     def getNbMondes(self):
         return (len(self.levels.keys()))
@@ -87,17 +80,5 @@ class Niveaux():
         self.fenMenu.initRects()
         self.fenMenu.afficheMenu()
         pygame.display.flip()
-
-
-    def loadLevels(self):
-        dirs = [f for f in os.listdir(self.getPath())]
-        self.levels = {}
-        for d in dirs:
-            self.levels[d + '/'] = {}
-            filenames = [f for f in os.listdir(self.getPath() + d + "/")]
-            for name in filenames:
-                lvl = os.path.splitext(name)[0]
-                self.levels[d + '/'][lvl] = (lambda p : Game(p, self.getMondeActuel(),
-                                                             self.fenMenu).game())
 
 n = Niveaux()
