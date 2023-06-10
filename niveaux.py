@@ -1,13 +1,9 @@
-from game import *
 from Monde import *
 
 class Niveaux():
     def __init__(self):
-        self.path = "./levels/"
-        self.niveauActuel = 0
-        self.mondes = ["foret/", "volcan/", "lagon/", "street/"]
+        self.worlds = self.genereWorlds()
         self.numondeActuel = 0
-        self.loadLevels()
         self.menu = self.initMenu()
         self.selectionNiveaux()
 
@@ -18,58 +14,35 @@ class Niveaux():
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.fenMenu.rectsMenu["jouer_button"].collidepoint(event.pos):
-                        self.adventure()
                         dansLeJeu = False
-                        
 
-
-    def adventure(self):
-        retour = self.niveauSuivant()
-        if retour == -1:
-            return
-        self.adventure()
-    
 
 
     #Fonctions d'accès
-    def getPath(self):
-        return self.path
+    def getWorlds(self):
+        return self.worlds
 
-    def getMondeActuel(self):
-        return self.mondes[self.getNumeroMondeActuel()]
+    def getActualWorld(self):
+        return self.Worlds[self.getNumeroMondeActuel()]
 
     def getNumeroMondeActuel(self):
         return self.numondeActuel
 
-    def getNiveauActuel(self):
-        return self.niveauActuel
-
-    def getNbMondes(self):
-        return (len(self.levels.keys()))
+    def getNbWorlds(self):
+        return (len(self.getWorlds()))
 
 
-    #Fonctions Modificatrices
-    def changeMonde(self, n):
+    #Fonctions génératrices
+    def changeWorld(self, n):
         self.numondeActuel = n
 
-    def mondeSuivant(self):
-        self.changeMonde((self.getNumeroMondeActuel() + 1)%self.getNbMondes())
-
-    def changeNiveauActuel(self, n):
-        self.niveauActuel = n
-
-    def dernierNiveauPasse(self):
-        return (self.getNiveauActuel() == self.getNbLevels())
-
-    def niveauSuivant(self):
-        if self.dernierNiveauPasse():
-            ##A changer pour revenir sur la map du monde
-            self.mondeSuivant()
-            self.changeNiveauActuel(0)
-        self.changeNiveauActuel((self.getNiveauActuel())%self.getNbLevels() + 1)
-        return self.launchLevel(self.getNiveauActuel(), self.getMondeActuel())
+    def nextWorld(self):
+        self.changeWorld((self.getNumeroMondeActuel() + 1)%self.getNbWorlds())
 
 
+    def genereWorlds(self):
+        listeDesWorlds = [Monde(m) for m in os.listdir("./levels/")]
+        return listeDesWorlds
 
 
     #Fonction d'initialisation

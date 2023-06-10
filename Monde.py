@@ -9,20 +9,17 @@ class Monde():
 
 
 
-    def loadLevels(self):
-        lvs = [f for f in os.listdir(self.getPath())]
-        for level in lvs:
-            name = level[:-4]
-            self.levels.append(Level(n))
-
     def launchLevel(self, n):
         return self.levels[n](
             self.getPath() + "Level" + str(n) + ".txt")
 
 
+    #Fonctions booléennes
     def lastLevelPassed(self):
         return (getActualLevel.getNumber() == len(getLevels()))
 
+    
+    #Fonctions d'accès
     def getName(self):
         return self.name
 
@@ -37,6 +34,15 @@ class Monde():
 
     def getNumberOfLevels(self):
         return len(self.getLevels())
+
+    #Fonctions génératrices
+    def loadLevels(self):
+        lvs = [f for f in os.listdir(self.getPath())]
+        n = 0
+        for level in lvs:
+            name = level[:-4]
+            self.levels.append(Level(n))
+            n += 1
 
 
 
