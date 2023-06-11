@@ -13,8 +13,6 @@ class Game():
 
 
     def game(self):
-        print("TAMERE")
-
         casesParcourues = []
         pygame.display.flip()
         if self.niveauFini():

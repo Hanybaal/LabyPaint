@@ -20,10 +20,14 @@ class Niveaux():
         while dansLeJeu:
             w = self.getActualWorld()
             retour = w.adventure()
+            if (retour == -1):
+                return
+            
             if (retour == 1):
                 self.nextWorld()
-                if (lastWorldPassed()):
-                    pass
+                if (self.lastWorldPassed()):
+                    pygame.quit()
+                    return 1
 
 
     def lastWorldPassed(self):
@@ -45,7 +49,7 @@ class Niveaux():
 
     #Fonctions génératrices
     def changeWorld(self, n):
-        self.numondeActuel = n
+        self.actualNumberWorld = n
 
     def nextWorld(self):
         self.changeWorld((self.getActualNumberWorld() + 1)%self.getNbWorlds())

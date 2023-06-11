@@ -10,15 +10,18 @@ class Monde():
 
     def adventure(self):
         retour = self.launchLevel(self.getActualLevel().getNumber() - 1)
-        if (retour == -1 or self.lastLevelPassed()):
+        if (retour == -1):
             return retour
+
+        if (self.lastLevelPassed()):
+            return 1
         
         self.nextLevel()
         return self.adventure()
 
     def nextLevel(self):
         numberNextLevel = self.getActualLevel().getNumber()
-        self.actualLevel = self.getLevels()[numberNextlevel]
+        self.actualLevel = self.getLevels()[numberNextLevel]
         
         
     def launchLevel(self, n):
@@ -27,7 +30,7 @@ class Monde():
 
     #Fonctions booléennes
     def lastLevelPassed(self):
-        return (self.getActualLevel().getNumber() == (len(self.getLevels()) - 1))
+        return (self.getActualLevel().getNumber() == self.getNumberOfLevels())
 
     
     #Fonctions d'accès
@@ -49,7 +52,7 @@ class Monde():
     #Fonctions génératrices
     def loadLevels(self):
         lvs = [f for f in os.listdir(self.getPath())]
-        n = 0
+        n = 1
         for level in lvs:
             name = level[:-4]
             self.levels.append(Level(n))
