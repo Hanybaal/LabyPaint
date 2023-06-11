@@ -8,11 +8,13 @@ class Game():
         self.grille = self.init_grille()
         self.player = self.init_player()
         self.graphismes = g
-        if g is not None:
+        if g is None:
             self.graphismes = self.init_graphismes(self.grille.getTailleY(), niveauActuel)
 
 
     def game(self):
+        print("TAMERE")
+
         casesParcourues = []
         pygame.display.flip()
         if self.niveauFini():

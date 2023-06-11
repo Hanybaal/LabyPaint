@@ -5,6 +5,9 @@ class Player():
         self.caseActuelle = None
 
     def deplacement(self, grille, direction : tuple, listeCasesParcourues = []):
+        if (self.isVoidDirection(direction)):
+            return []
+        
         coordx = self.getX() + direction[0]
         coordy = self.getY() + direction[1]
         if grille.blocage((coordx, coordy)):
@@ -21,6 +24,8 @@ class Player():
         
         return self.deplacement(grille, direction, listeCasesParcourues)
 
+    def isVoidDirection(self, direction):
+        return (direction == (0, 0))
 
     def getCA(self):
         return self.caseActuelle

@@ -3,20 +3,31 @@ from game import *
 class Monde():
     def __init__(self, name):
         self.name = name
-        self.actualLevel = None
         self.levels = []
         self.loadLevels()
+        self.actualLevel = self.levels[0]
 
 
+    def adventure(self):
+        retour = self.launchLevel(self.getActualLevel().getNumber() - 1)
+        if (retour == -1 or self.lastLevelPassed()):
+            return retour
+        
+        self.nextLevel()
+        return self.adventure()
 
+    def nextLevel(self):
+        numberNextLevel = self.getActualLevel().getNumber()
+        self.actualLevel = self.getLevels()[numberNextlevel]
+        
+        
     def launchLevel(self, n):
-        return self.levels[n](
-            self.getPath() + "Level" + str(n) + ".txt")
+        return self.levels[n].launch(self.getName())
 
 
     #Fonctions booléennes
     def lastLevelPassed(self):
-        return (getActualLevel.getNumber() == len(getLevels()))
+        return (self.getActualLevel().getNumber() == (len(self.getLevels()) - 1))
 
     
     #Fonctions d'accès
@@ -30,7 +41,7 @@ class Monde():
         return self.levels
 
     def getActualLevel(self):
-        return actualLevel
+        return self.actualLevel
 
     def getNumberOfLevels(self):
         return len(self.getLevels())
@@ -54,4 +65,5 @@ class Level():
         return self.number
 
     def launch(self, monde):
-        return Game("./levels/" + monde + "/Level" + str(getNumber() + ".txt"), monde + "/").game()
+        return Game("./levels/" + monde + "/Level" + str(self.getNumber()) + ".txt",
+                    monde + "/").game()
