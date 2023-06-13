@@ -46,7 +46,6 @@ class ManualGenerator(Tk):
         y, x = cellule.getY(), cellule.getX()
         g = self.grille.grid
         self.can.itemconfigure(self.graphicGrid[y][x], fill = self.grille.stateToColor(cellule.getState))
-        print(cellule.getX())
 
     def optionsClavier(self, event):
         touche = event.keysym
@@ -57,13 +56,22 @@ class ManualGenerator(Tk):
             res = self.tabSize.get()
             if (res != ""):
                 if ('+' in res):
-                    newY = int(res[0])
-                    newX = int(res[2])
+                    estUnChiffre = lambda car : (car in "1234567890" and (len(car) == 1))
+                    n, m = 0, 0
+                    car = res[0]
+                    while(estUnChiffre(car)):
+                        n += 1
+                        car = res[n]
+                        
+                    newY = int(res[:(n)])
+                    newX = int(res[(n+1):])
+                    print(newX, newY)
                     self.grille = GeneratorGrid(newY, newX)
 ##                    self.fenInfos.changePasX(newX)
 ##                    self.fenInfos.changePasY(newY)
                     self.afficheGrid()
                     self.update()
+
                 
 
     def quitter(self):
@@ -75,7 +83,7 @@ class ManualGenerator(Tk):
         g = self.grille
         for ligne in g.grid:
             for cel in ligne:
-                s = cel.getEtat()
+                s = cel.getState()
                 file.write(str(s))
             file.write('\n')
         file.close()
