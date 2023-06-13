@@ -1,5 +1,6 @@
 from GeneratorGrid import *
 from tkinter import *
+from game import *
 import os
 import ctypes
 
@@ -18,6 +19,12 @@ class ManualGenerator(Tk):
         #Partie Bind: on associe les touches et la souris à des rôles
         self.bind('<Key>', self.optionsClavier)
 
+
+    def test(self):
+        self.genFile(True)
+        g = Game("test.txt", "m3lagon/")
+        retour = g.game()
+        g.quitter()
 
     def afficheGrid(self):
         can = self.getCan()
@@ -65,7 +72,6 @@ class ManualGenerator(Tk):
                         
                     newY = int(res[:(n)])
                     newX = int(res[(n+1):])
-                    print(newX, newY)
                     self.grille = GeneratorGrid(newY, newX)
 ##                    self.fenInfos.changePasX(newX)
 ##                    self.fenInfos.changePasY(newY)
@@ -77,8 +83,12 @@ class ManualGenerator(Tk):
     def quitter(self):
         self.destroy()
 
-    def genFile(self):
-        name = input("Rentrez un nom de fichier: ")
+    def genFile(self, nom = False):
+        if not nom:
+            name = input("Rentrez un nom de fichier: ")
+        else:
+            name = "test"
+        
         file = open(name + ".txt", "w")
         g = self.grille
         for ligne in g.grid:
@@ -125,6 +135,9 @@ class ManualGenerator(Tk):
 
         info = Label(self, text = "Taille du tableau sous forme y+x")
         info.place(x = 0, y = 0)
+
+        self.testButton = Button(self, text = "Test", command = self.test)
+        self.testButton.place(x = 0, y = 40)
 
 
 

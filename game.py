@@ -100,3 +100,4 @@ class Lecteur():
 
     def getPath(self):
         return self.path
+
