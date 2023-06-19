@@ -25,7 +25,7 @@ class Monde():
         
         
     def launchLevel(self, n):
-        return self.levels[n].launch(self.getName())
+        return self.levels[n].launch()
 
 
     #Fonctions booléennes
@@ -55,18 +55,26 @@ class Monde():
         n = 1
         for level in lvs:
             name = level[:-4]
-            self.levels.append(Level(n))
+            self.levels.append(Level(n, self.getName()))
             n += 1
 
 
 
 class Level():
-    def __init__(self, number):
+    def __init__(self, number, world):
         self.number = number
+        self.world = world
 
+    ##Fonctions get
     def getNumber(self):
         return self.number
 
-    def launch(self, monde):
-        return Game("./levels/" + monde + "/Level" + str(self.getNumber()) + ".txt",
-                    monde + "/").game()
+    def getWorld(self):
+        return self.world
+
+
+    def launch(self):
+        return Game("./levels/" + self.getWorld() + "/Level" + str(self.getNumber()) + "/",
+                    self.getWorld() + "/").game()
+
+    

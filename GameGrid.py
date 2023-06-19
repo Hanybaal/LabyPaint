@@ -3,6 +3,7 @@ from grille import *
 class GameGrid(Grille):
     def __init__(self):
         super().__init__()
+        self.metaData = {}
 
 
     def crea_grille(self, fichier):
@@ -13,7 +14,8 @@ class GameGrid(Grille):
             i += 1
             j = -1
             g.append([])
-            for car in ligne:
+            rligne = ligne.split(',')
+            for car in rligne:
                 j += 1
                 if car != '\n':
                     etat = int(car)
@@ -25,6 +27,21 @@ class GameGrid(Grille):
             for c in range(len(g[l])):
                 g[l][c].voisins = g[l][c].calculVoisins(self.getGrille())
 
+    def creaMetaData(self, fichier):
+        for ligne in fichier:
+            cleValeur = ligne.split("-->")
+            self.metaData[cleValeur[0]] = cleValeur[1]
+
+    ##Fonctions get propres à la GameGrid
+    def getOrigineCell(self):
+        return self.getCellule(list(map(int, self.metaData["depart"].split(','))))
+
+    def getName(self):
+        return self.metaData["nom"]
+
+    def getOptimalNbSteps(self):
+        return self.metaData["nco"]
+    
 
 class GameCell(Cellule):
     def __init__(self, coords, etat):

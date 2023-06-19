@@ -58,7 +58,7 @@ class Game():
 
     def init_player(self):
         p = Player()
-        celluleOrigine = self.grille.getCellule([0, 0])
+        celluleOrigine = self.grille.getOrigineCell()
         p.changeCA(celluleOrigine)
         celluleOrigine.passage()
         return p
@@ -66,8 +66,10 @@ class Game():
 
     def init_grille(self):
         g = GameGrid()
-        fichier = open(self.lecteur.getPath(), "r")
+        fichier = open(self.lecteur.getPath() + "Level.txt", "r")
         g.crea_grille(fichier)
+        md = open(self.lecteur.getPath() + "MetaDonnees.txt", "r")
+        g.creaMetaData(md)
         return g
         
     def init_graphismes(self, d, niveauActuel):
