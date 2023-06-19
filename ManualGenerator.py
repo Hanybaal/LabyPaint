@@ -22,7 +22,7 @@ class ManualGenerator(Tk):
 
     def test(self):
         self.genFile(True)
-        g = Game("test.txt", "m3lagon/")
+        g = Game("./", "m3lagon/")
         retour = g.game()
         g.quitter()
 
@@ -88,16 +88,23 @@ class ManualGenerator(Tk):
             name = input("Rentrez un nom de fichier: ")
         else:
             name = "test"
+        dep = "0,0"
         
-        file = open(name + ".txt", "w")
+        file = open("Level.txt", "w")
         g = self.grille
         for ligne in g.grid:
             for cel in ligne:
                 s = cel.getState()
                 file.write(str(s))
+                if (cel != ligne[-1]):
+                    file.write(',')
             file.write('\n')
         file.close()
-            
+
+        md = open("Metadonnees.txt", "w")
+        md.write("depart-->" + dep + "\n")
+        md.write("nom-->" + "name\n")
+        md.write("nco-->3")
 
 
     ##Fonctions get

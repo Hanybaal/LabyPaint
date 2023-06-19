@@ -68,7 +68,7 @@ class Game():
         g = GameGrid()
         fichier = open(self.lecteur.getPath() + "Level.txt", "r")
         g.crea_grille(fichier)
-        md = open(self.lecteur.getPath() + "MetaDonnees.txt", "r")
+        md = open(self.lecteur.getPath() + "Metadonnees.txt", "r")
         g.creaMetaData(md)
         return g
         
