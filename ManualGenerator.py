@@ -64,7 +64,7 @@ class ManualGenerator(Tk):
             if (res != ""):
                 if ('+' in res):
                     estUnChiffre = lambda car : (car in "1234567890" and (len(car) == 1))
-                    n, m = 0, 0
+                    n = 0
                     car = res[0]
                     while(estUnChiffre(car)):
                         n += 1
@@ -73,8 +73,6 @@ class ManualGenerator(Tk):
                     newY = int(res[:(n)])
                     newX = int(res[(n+1):])
                     self.grille = GeneratorGrid(newY, newX)
-##                    self.fenInfos.changePasX(newX)
-##                    self.fenInfos.changePasY(newY)
                     self.afficheGrid()
                     self.update()
 
