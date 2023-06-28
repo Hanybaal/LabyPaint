@@ -24,7 +24,7 @@ class ManualGenerator(Tk):
         self.genFile(True)
         g = Game("./", "m3lagon/")
         retour = g.game()
-        g.quitter()
+        g.quit()
 
     def afficheGrid(self):
         can = self.getCan()
@@ -57,9 +57,10 @@ class ManualGenerator(Tk):
     def optionsClavier(self, event):
         touche = event.keysym
         if touche == "Escape":
-            self.quitter()
+            self.quit()
 
         if touche == "Return":
+            ##Crée la grille
             res = self.tabSize.get()
             if (res != ""):
                 if ('+' in res):
@@ -78,7 +79,7 @@ class ManualGenerator(Tk):
 
                 
 
-    def quitter(self):
+    def quit(self):
         self.destroy()
 
     def genFile(self, nom = False):

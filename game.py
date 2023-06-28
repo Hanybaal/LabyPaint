@@ -15,7 +15,7 @@ class Game():
     def game(self):
         casesParcourues = []
         pygame.display.flip()
-        if self.niveauFini():
+        if self.finishedLevel():
             return 1
             
         d = None
@@ -25,9 +25,9 @@ class Game():
                     d = self.convertIntoDirection(event.key)
 
         if (d == -1):
-            return self.quitter()
+            return self.quit()
 
-        casesParcourues = self.player.deplacement(self.grille, d, [self.player.getCA()])
+        casesParcourues = self.player.selfMove(self.grille, d, [self.player.getCA()])
         self.graphismes.deplaceJoueur(casesParcourues, d, self.grille.getGrille())
         return self.game()
         
@@ -52,8 +52,8 @@ class Game():
         return ((0, 0))
         
         
-    def niveauFini(self):
-        return (self.grille.pasDeCaseLibre())
+    def finishedLevel(self):
+        return (self.grille.noFreeCase())
         
 
     def init_player(self):
@@ -80,7 +80,7 @@ class Game():
         g.affichePlayer(self.player)
         return g
 
-    def quitter(self):
+    def quit(self):
         pygame.quit()
         return -1
 

@@ -9,50 +9,27 @@ class Grille():
             print(ligne)
         return ""
 
-    def crea_grille(self, fichier):
-        self.grille = []
-        i, j = -1, -1
-        for ligne in fichier:
-            i += 1
-            j = -1
-            self.grille.append([])
-            for car in ligne:
-                j += 1
-                if car != '\n':
-                    etat = int(car)
-                    if (etat == 0):
-                        etat += self.randomMur()
-                    self.grille[-1].append(Cellule(etat, (j, i)))
+##    def crea_grille(self, fichier):
+##        self.grille = []
+##        i, j = -1, -1
+##        for ligne in fichier:
+##            i += 1
+##            j = -1
+##            self.grille.append([])
+##            for car in ligne:
+##                j += 1
+##                if car != '\n':
+##                    etat = int(car)
+##                    if (etat == 0):
+##                        etat += self.randomWall()
+##                    self.grille[-1].append(Cellule(etat, (j, i)))
+##
+##        for l in range(len(self.grille)):
+##            for c in range(len(self.grille[l])):
+##                self.grille[l][c].voisins = self.grille[l][c].getSides(self.getGrille())
 
-        for l in range(len(self.grille)):
-            for c in range(len(self.grille[l])):
-                self.grille[l][c].voisins = self.grille[l][c].calculVoisins(self.getGrille())
-
-    def randomMur(self):
-        alea = randint(0, 100)
-        if alea <= 50:
-            return 0
-
-        if alea <= 85:
-            return -1
-
-        return -2
     
-    def pasDeCaseLibre(self):
-        for ligne in self.getGrille():
-            for cel in ligne:
-                if (cel.estPeinte()):
-                    return False                
-        return True
-
-    def nbCasesLibres(self):
-        n = 0
-        for ligne in self.getGrille():
-            for cel in ligne:
-                if (cel.estPeinte()):
-                    n += 1
-        return n
-
+    ##Fonctions get
     def getGrille(self):
         return self.grille
 
@@ -75,9 +52,6 @@ class Grille():
                 or coords[1] >= self.getTailleX()
                 or coords[1] < 0)
     
-    def blocage(self, coords):
-        return (self.sortie(coords) or not (self.getCellule(coords).estLibre()))
-
 
 class Cellule():
     def __init__(self, coords):
@@ -88,7 +62,7 @@ class Cellule():
     def __repr__(self):
         return str((self.getX(), self.getY()))            
 
-    def calculVoisins(self, grille):
+    def getSides(self, grille):
         #Haut - Droite - Bas - Gauche
         v = []
 
@@ -116,30 +90,30 @@ class Cellule():
         return self.y
 
     def getVoisins(self, grille):
-        return self.calculVoisins(grille)
+        return self.getSides(grille)
 
 
-    def cIsPlusBas(self, cellule):
+    def moreDown(self, cellule):
         return (self.getY() > cellule.getY())
 
-    def cIsPlusHaut(self, cellule):
+    def moreUp(self, cellule):
         return (self.getY() < cellule.getY())
 
-    def cIsPlusGauche(self, cellule):
+    def moreLeft(self, cellule):
         return (self.getX() < cellule.getX())
 
-    def cIsPlusDroite(self, cellule):
+    def moreRight(self, cellule):
         return (self.getX() > cellule.getX())
 
 
-    def estEnHaut(self):
+    def isTop(self):
         return (self.getY() == 0)
 
-    def estADroite(self, g):
+    def isRight(self, g):
         return (self.getX() > len(g[0]) - 1)
     
-    def estEnHaut(self, g):
+    def isDown(self, g):
         return (self.getY() > len(g) - 1)
 
-    def estEnHaut(self):
+    def isLeft(self):
         return (self.getX() == 0)

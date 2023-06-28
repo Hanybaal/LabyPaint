@@ -20,17 +20,41 @@ class GameGrid(Grille):
                 if car != '\n':
                     etat = int(car)
                     if (etat == 0):
-                        etat += self.randomMur()
+                        etat += self.randomWall()
                     g[-1].append(GameCell((j, i), etat))
 
         for l in range(len(g)):
             for c in range(len(g[l])):
-                g[l][c].voisins = g[l][c].calculVoisins(self.getGrille())
+                g[l][c].voisins = g[l][c].getSides(self.getGrille())
 
     def creaMetaData(self, fichier):
         for ligne in fichier:
             cleValeur = ligne.split("-->")
             self.metaData[cleValeur[0]] = cleValeur[1]
+
+
+
+    ##Fonctions booléennes
+    def noFreeCase(self):
+        for ligne in self.getGrille():
+            for cel in ligne:
+                if (cel.estPeinte()):
+                    return False                
+        return True
+
+
+    def randomWall(self):
+        alea = randint(0, 100)
+        if alea <= 50:
+            return 0
+
+        if alea <= 85:
+            return -1
+
+        return -2
+
+    def isBloqued(self, coords):
+        return (self.sortie(coords) or not (self.getCellule(coords).estLibre()))
 
     ##Fonctions get propres à la GameGrid
     def getOrigineCell(self):
@@ -41,6 +65,14 @@ class GameGrid(Grille):
 
     def getOptimalNbSteps(self):
         return self.metaData["nco"]
+
+    def nbCasesLibres(self):
+        n = 0
+        for ligne in self.getGrille():
+            for cel in ligne:
+                if (cel.estPeinte()):
+                    n += 1
+        return n
     
 
 class GameCell(Cellule):
